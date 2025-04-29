@@ -1,7 +1,14 @@
 [package]
 name = "html-image-comparer"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2024"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/akagiyuu/html-image-comparer"
+homepage = "https://github.com/akagiyuu/html-image-comparer"
+description = """
+A library designed for the backend of html, css competitive programming platforms
+"""
 
 [dependencies]
 chromiumoxide = { version = "0.7.0", features = ["tokio-runtime"] }
