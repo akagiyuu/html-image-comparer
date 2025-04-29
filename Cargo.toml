@@ -1,0 +1,9 @@
+[package]
+name = "html-image-comparer"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+chromiumoxide = { version = "0.7.0", features = ["tokio-runtime"] }
+pixelmatch = "0.1.0"
+thiserror = "2.0.12"
