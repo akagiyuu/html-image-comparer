@@ -1,0 +1,60 @@
+on:
+  push:
+    branches: master
+    paths-ignore:
+      - "**.md"
+  pull_request:
+    branches: master
+    paths-ignore:
+      - "**.md"
+
+permissions:
+  contents: read
+
+jobs:
+  clippy-fmt:
+    name: Check Clippy and rustfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+          components: clippy, rustfmt
+      - name: Check Clippy
+        run: cargo clippy --workspace -- -D warnings
+      - name: Check rustfmt
+        run: cargo fmt --all -- --check
+
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            toolchain: stable
+
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            toolchain: stable
+
+          - os: windows-latest
+            target: x86_64-pc-windows-gnu
+            toolchain: stable
+
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            toolchain: stable
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          target: ${{ matrix.target }}
+          toolchain: ${{ matrix.toolchain }}
+      - run: ${{ matrix.deps }}
+      - name: Integration test
+        run: |
+          cargo test --target ${{ matrix.target }}
