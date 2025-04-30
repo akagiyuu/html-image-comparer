@@ -3,10 +3,12 @@ on:
     branches: main
     paths-ignore:
       - "**.md"
+      - ".github/**"
   pull_request:
     branches: main
     paths-ignore:
       - "**.md"
+      - ".github/**"
 
 permissions:
   contents: read
@@ -55,6 +57,12 @@ jobs:
           target: ${{ matrix.target }}
           toolchain: ${{ matrix.toolchain }}
       - run: ${{ matrix.deps }}
+      - uses: Swatinem/rust-cache@v2
+      - name: Setup Chromium
+        uses: browser-actions/setup-chrome@v1
+        with:
+          install-dependencies: true
+          chrome-version: stable
       - name: Integration test
         run: |
           cargo test --target ${{ matrix.target }}
