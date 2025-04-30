@@ -29,7 +29,7 @@ pub async fn diff(
     width: u32,
     height: u32,
     page: &Page,
-) -> Result<f64> {
+) -> Result<(f64, Vec<u8>)> {
     let html_image = render(html, page).await?;
     let rendered_size = (width * height) as usize;
     let mut diff_buffer = Vec::with_capacity(rendered_size);
@@ -49,5 +49,5 @@ pub async fn diff(
 
     let match_percent = 1. - (diff as f64) / (rendered_size as f64);
 
-    Ok(match_percent)
+    Ok((match_percent, diff_buffer))
 }
