@@ -50,7 +50,7 @@ async fn main() {
     let browser = init_browser().await.unwrap();
     let page = browser.new_page("about:blank").await.unwrap();
 
-    let score = html_image_comparer::diff(html, expected_image, WIDTH, HEIGHT, &page)
+    let (score, _) = html_image_comparer::diff(html, expected_image, WIDTH, HEIGHT, &page)
         .await
         .unwrap();
     println!("Score: {}", score);

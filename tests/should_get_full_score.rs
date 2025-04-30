@@ -25,7 +25,7 @@ async fn should_get_full_score() -> Result<()> {
     let browser = common::init_browser().await?;
     let page = browser.new_page("about:blank").await?;
 
-    let score = html_image_comparer::diff(html, &expected_image, WIDTH, HEIGHT, &page).await?;
+    let (score, _) = html_image_comparer::diff(html, &expected_image, WIDTH, HEIGHT, &page).await?;
 
     assert_eq!(score, 1.);
 
