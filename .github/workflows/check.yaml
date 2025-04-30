@@ -24,6 +24,7 @@ jobs:
         with:
           toolchain: stable
           components: clippy, rustfmt
+      - uses: Swatinem/rust-cache@v2
       - name: Check Clippy
         run: cargo clippy --workspace -- -D warnings
       - name: Check rustfmt
